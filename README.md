@@ -19,11 +19,11 @@ As we have seen, *complete binary trees* can be efficiently represented in a seq
 
 
 ```java
-class Node<T> {
+class Node {
                                          +--------------+
   private T info;                        |     info     |
-  private Node<T> left;                  +------+-------+
-  private Node<T> right;                 | left | right |
+  private Node left;                     +------+-------+
+  private Node right;                    | left | right |
   ...                                    +------+-------+
 }
 ```
@@ -33,22 +33,22 @@ Implement a priority queue using a heap-ordered binary tree, but use a triply li
 Please use the following API for your ADT.
 
 ```java
-public interface MaxPQ<Key extends Comparable<Key>> {
-  Key delMax();
-  void insert(Key key);
+public interface MaxPQ<T extends Comparable<T>> {
+  T delMax();
+  void insert(T key);
   boolean isEmpty();
   int size();
   String toString();
 }
 ```
 
-Note that the specification of the generic type variable `Key` in:
+Note that the specification of the generic type variable `T` in:
 
 ```java
-Key extends Comparable<Key>
+T extends Comparable<T>
 ```
 
-means that the type variable `Key` can be replaced by any type that includes *at least* an `int compareTo(Key other)` function. 
+means that the type variable `Key` can be replaced by any type that includes *at least* an `int compareTo(T other)` function. 
 
 As with the sequential implementation, the `insert` operation must find the tree node to which a new entry is to be attached and the `delMax` operation must find the node containing the last entry in the complete binary tree. In the sequential implementation these tree locations were easy to find using the size of the tree to compute the appropriate array index. With this linked implementation, a little more work is required. But consider using the size of the tree to recursively compute a path from the root to the desired node. Division by 2 will come in handy as will remainder when divided by 2.
 
