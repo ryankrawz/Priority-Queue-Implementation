@@ -4,6 +4,7 @@ Nick Hawk & Ryan Krawczyk
  */
 
 import java.util.*;
+import java.lang.*;
 
 public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
 
@@ -34,17 +35,17 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
         if (this.isEmpty()) { throw new NoSuchElementException("EMPTY QUEUE"); }
         else {
             T item = this.first.info;
+            this.first.info = this.last.info;
             if (this.size() == 1) {
                 this.first = null;
                 this.last = null;
-            } else if (/* this.last is single node remaining on bottom level */) {
+            } else if (this.size() == Math.pow(2, this.level() - 1) + 1) {
                 this.setNewLevel(this.first);
             } else if (this.size() % 2 == 1) { this.last = this.last.parent.left; }
             else {
                 // If this.last is a left child
             }
         }
-        this.first.info = this.last.info;
         this.N--;
         return item;
     }
