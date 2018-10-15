@@ -31,44 +31,51 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
     }
 
     public T evictMax() {
-        if (this.N == 0) { throw new NoSuchElementException("EMPTY QUEUE"); }
-        else if (this.N == 1) {
+        if (this.isEmpty()) { throw new NoSuchElementException("EMPTY QUEUE"); }
+        else {
             T item = this.first.info;
-            this.first = null;
-            this.last = null;
-        } else {
-            T item = this.first.info;
-            this.last.left = this.first.left;
-            this.last.right = this.first.right;
-            if (this.N % 2 == 0) { this.last.parent.right = null; }
-            else { this.last.parent.left = null; }
-            this.last.parent = null;
-            this.first = this.last;
-            if () {
-                // This is for the case of a single node remaining on the last level.
-            } else {
-
+            if (this.size() == 1) {
+                this.first = null;
+                this.last = null;
+            } else if (/* this.last is single node remaining on bottom level */) {
+                this.setNewLevel(this.first);
+            } else if (this.size() % 2 == 1) { this.last = this.last.parent.left; }
+            else {
+                // If this.last is a left child
             }
         }
+        this.first.info = this.last.info;
         this.N--;
         return item;
     }
 
-    public void insert(T key) {}
+    public void insert(T key) {
+        if (this.isEmpty()) {
+            this.first = new Node(key, null, null, null);
+            this.last = this.first;
+        }
+    }
 
     public boolean isEmpty() {}
 
-    public int size() {}
+    public int size() { return this.N; }
 
     public String toString() {}
-
-    private void exch(Node key1, Node key2) {}
 
     private void sink(Node key) {}
 
     private void swim(Node key) {}
 
     private int level() { return Math.log(this.N) / Math.log(2); }
+
+    private void setNewLevel(Node top) {
+        if (top.right == null) {
+            this.last = top;
+            return;
+        } else {
+            return this.setNewLevel(top.right);
+        }
+    }
 
     public static void main(String[] args) {}
 
