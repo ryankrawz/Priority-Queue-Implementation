@@ -32,29 +32,20 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
     }
 
     public T evictMax() {
-        if (this.isEmpty()) { throw new NoSuchElementException("EMPTY QUEUE"); }
+        if (this.isEmpty()) {
+            throw new NoSuchElementException("EMPTY QUEUE");
+        }
         else {
             T item = this.first.info;
             this.first.info = this.last.info;
-            if (this.size() == 1) {
-                this.first = null;
-                this.last = null;
-            } else if (this.size() == Math.pow(2, this.level() - 1) + 1) {
-                this.setNewLevel(this.first);
-            } else if (this.size() % 2 == 1) { this.last = this.last.parent.left; }
-            else {
-                // If this.last is a left child
-            }
+            this.setLast(--this.N);
         }
-        this.N--;
         return item;
     }
 
     public void insert(T key) {
-        if (this.isEmpty()) {
-            this.first = new Node(key, null, null, null);
-            this.last = this.first;
-        }
+        this.setLast(++this.N);
+        this.last.info = key;
     }
 
     public boolean isEmpty() {}
@@ -69,12 +60,11 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
 
     private int level() { return Math.log(this.N) / Math.log(2); }
 
-    private void setNewLevel(Node top) {
-        if (top.right == null) {
-            this.last = top;
-            return;
+    private void setLast(int N) {
+        if (N == 1) {
+            this.last = new Node(null, /* pointer to parent */, null, null);
         } else {
-            return this.setNewLevel(top.right);
+            
         }
     }
 
