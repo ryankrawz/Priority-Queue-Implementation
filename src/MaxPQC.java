@@ -48,15 +48,45 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
         this.last.info = key;
     }
 
-    public boolean isEmpty() {}
+    public boolean isEmpty() {
+      if (N == 0) { return true; }
+      else { return false; }
+    }
 
     public int size() { return this.N; }
 
     public String toString() {}
 
-    private void sink(Node key) {}
+    public void exchange(Node key1, Node key2) {
+      T temp = key1.info;
+      key1.info = key2.info;
+      key2.info = temp;
 
-    private void swim(Node key) {}
+    }
+
+    private void sink(Node key) {
+      while (!key.left.equals(null)) {
+        if ((!key.right.equals(null)) && (key.right.info > key.left.info)) {
+          Node greatest = key.right;
+        }
+        else {
+          Node greatest = key.left;
+        }
+        if (greatest.info > key.info) {
+          exchange(greatest, key);
+          key = greatest;
+          }
+        else { break; }
+      }
+    }
+
+    private void swim(Node key) {
+      while (!key.parent.equals(null) && key.info > key.parent.info) {
+        exchange(key, key.parent);
+        key = key.parent;
+      }
+
+    }
 
     private int level() { return Math.log(this.N) / Math.log(2); }
 
@@ -64,7 +94,7 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
         if (N == 1) {
             this.last = new Node(null, /* pointer to parent */, null, null);
         } else {
-            
+
         }
     }
 
