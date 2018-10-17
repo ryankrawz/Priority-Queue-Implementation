@@ -6,7 +6,7 @@ Nick Hawk & Ryan Krawczyk
 import java.util.*;
 import java.lang.*;
 
-public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
+public class MaxPQC<T> implements MaxPQ<T> extends Comparable<T> {
 
     private Node first, last;
     private int N;
@@ -35,7 +35,8 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
         T item;
         if (this.isEmpty()) {
             throw new NoSuchElementException("EMPTY QUEUE");
-        } else if (this.size() == 1) {
+        }
+        else if (this.size() == 1) {
             item = this.first.info;
             this.first = null;
             this.last = null;
@@ -53,16 +54,14 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
         this.last.info = key;
     }
 
-    public boolean isEmpty() {
-      if (N == 0) { return true; }
-      else { return false; }
-    }
+    public boolean isEmpty() { return N == 0; }
+
 
     public int size() { return this.N; }
 
     public void toString(Node root) {
         if (root.parent.equals(null)) {
-            System.out.print(" " + root.info " ");
+            System.out.print(" " + root.info + " ");
             return;
         }
         if (!root.left.equals(null)) {
@@ -103,6 +102,22 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
     }
 
     private static double level(int N) { return Math.log(N) / Math.log(2); }
+
+    private Node<T> nodeAt(int m) {
+        if (m == 1) return first;
+        if (m % 2 == 0) return nodeAt(m / 2).left;
+        else return nodeAt(m / 2).right;
+      }
+
+      public String toString() {
+      StringBuilder ans = new StringBuilder();
+      ans.append("{" + first.info);
+      for (int i = 2; i <= n; i++)
+        ans.append(", " + nodeAt(i).info);
+      ans.append("}");
+      return ans.toString();
+    }
+
 
     private T setLast(Node root, int N) {
         int nodeCount = 0;
