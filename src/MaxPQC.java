@@ -6,14 +6,13 @@ Nick Hawk & Ryan Krawczyk
 import java.util.*;
 import java.lang.*;
 
-public class MaxPQC<T> implements MaxPQ<T> extends Comparable<T> {
+public class MaxPQC<T extends Comparable<T>> implements MaxPQ<T> {
 
     private Node first, last;
     private int N;
 
     private class Node {
         T info;
-        int place;
         Node parent;
         Node left;
         Node right;
@@ -58,18 +57,6 @@ public class MaxPQC<T> implements MaxPQ<T> extends Comparable<T> {
 
 
     public int size() { return this.N; }
-
-    public void toString(Node root) {
-        if (root.parent.equals(null)) {
-            System.out.print(" " + root.info + " ");
-            return;
-        }
-        if (!root.left.equals(null)) {
-            return toString(root.left);
-        }
-        System.out.print(" " + root.info + " ");
-        // TODO not complete
-    }
 
     public void exchange(Node key1, Node key2) {
       T temp = key1.info;
@@ -121,7 +108,7 @@ public class MaxPQC<T> implements MaxPQ<T> extends Comparable<T> {
 
     private T setLast(Node root, int N) {
         int nodeCount = 0;
-        for (int i = 0; i < level(N); i++) {
+        for (double i = 0; i < level(N); i++) {
             nodeCount += Math.pow(2, i);
         }
         int bottomLeaves = N - nodeCount;
@@ -141,10 +128,6 @@ public class MaxPQC<T> implements MaxPQ<T> extends Comparable<T> {
         }
         T fake = root.info;
         return fake;
-    }
-
-    private static boolean isGreater(Node key1, Node key2) {
-
     }
 
     public static void main(String[] args) {}
