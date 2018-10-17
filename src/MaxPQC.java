@@ -60,14 +60,6 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
     public int size() { return this.N; }
 
     public void toString(Node root) {
-        if (root.parent.equals(null)) {
-            System.out.print(" " + root.info " ");
-            return;
-        }
-        if (!root.left.equals(null)) {
-            return toString(root.left);
-        }
-        System.out.print(" " + root.info + " ");
         // TODO not complete
     }
 
