@@ -43,13 +43,13 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
         else {
             item = this.first.info;
             this.first.info = this.last.info;
-            this.setLast(this.first, --this.N, 0);
+            this.setLast(this.first, --this.N);
         }
         return item;
     }
 
     public void insert(T key) {
-        this.setLast(this.first, ++this.N, 1);
+        this.setLast(this.first, ++this.N);
         this.last.info = key;
     }
 
@@ -60,7 +60,17 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
 
     public int size() { return this.N; }
 
-    public String toString() { return ""; }
+    public void toString(Node root) {
+        if (root.parent.equals(null)) {
+            System.out.print(" " + root.info " ");
+            return;
+        }
+        if (!root.left.equals(null)) {
+            return toString(root.left);
+        }
+        System.out.print(" " + root.info + " ");
+        
+    }
 
     public void exchange(Node key1, Node key2) {
       T temp = key1.info;
@@ -70,11 +80,12 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
 
     private void sink(Node key) {
       while (!key.left.equals(null)) {
+        Node greatest;
         if ((!key.right.equals(null)) && (key.right.info > key.left.info)) {
-          Node greatest = key.right;
+          greatest = key.right;
         }
         else {
-          Node greatest = key.left;
+          greatest = key.left;
         }
         if (greatest.info > key.info) {
           exchange(greatest, key);
@@ -89,12 +100,11 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
         exchange(key, key.parent);
         key = key.parent;
       }
-
     }
 
     private static double level(int N) { return Math.log(N) / Math.log(2); }
 
-    private T setLast(Node root, int N, int tell) {
+    private T setLast(Node root, int N) {
         int nodeCount = 0;
         for (int i = 0; i < level(N); i++) {
             nodeCount += Math.pow(2, i);
@@ -102,20 +112,24 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
         int bottomLeaves = N - nodeCount;
 
         if (bottomLeaves == 1) {
-            if (tell == 1) { root.left = new Node(null, root, null, null); }
+            if (root.left.equals(null)) { root.left = new Node(null, root, null, null); }
             this.last = root.left;
         } else if (bottomLeaves == 2) {
-            if (tell == 1) { root.right = new Node(null, root, null, null); }
+            if (root.right.equals(null)) { root.right = new Node(null, root, null, null); }
             this.last = root.right;
         } else {
             if (bottomLeaves <= Math.pow(2, level(N) - 1)) {
-                return setLast(root.left, N / 2, tell);
+                return setLast(root.left, N / 2);
             } else {
-                return setLast(root.right, N / 2, tell);
+                return setLast(root.right, N / 2);
             }
         }
         T fake = root.info;
         return fake;
+    }
+
+    private static boolean isGreater(Node key1, Node key2) {
+
     }
 
     public static void main(String[] args) {}
