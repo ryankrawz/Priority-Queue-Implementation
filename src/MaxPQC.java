@@ -69,7 +69,7 @@ public class MaxPQC<T> implements MaxPQ<T> {
             return toString(root.left);
         }
         System.out.print(" " + root.info + " ");
-        
+
     }
 
     public void exchange(Node key1, Node key2) {
