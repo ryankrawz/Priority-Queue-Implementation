@@ -60,7 +60,17 @@ public class MaxPQC<T> implements MaxPQ<T> {
 
     public int size() { return this.N; }
 
-    public String toString() { return ""; }
+    public void toString(Node root) {
+        if (root.parent.equals(null)) {
+            System.out.print(" " + root.info " ");
+            return;
+        }
+        if (!root.left.equals(null)) {
+            return toString(root.left);
+        }
+        System.out.print(" " + root.info + " ");
+        
+    }
 
     public void exchange(Node key1, Node key2) {
       T temp = key1.info;
@@ -71,11 +81,12 @@ public class MaxPQC<T> implements MaxPQ<T> {
 
     private void sink(Node key) {
       while (!key.left.equals(null)) {
+        Node greatest;
         if ((!key.right.equals(null)) && (key.right.info > key.left.info)) {
-          Node greatest = key.right;
+          greatest = key.right;
         }
         else {
-          Node greatest = key.left;
+          greatest = key.left;
         }
         if (greatest.info > key.info) {
           exchange(greatest, key);
@@ -90,7 +101,6 @@ public class MaxPQC<T> implements MaxPQ<T> {
         exchange(key, key.parent);
         key = key.parent;
       }
-
     }
 
     private static double level(int N) { return Math.log(N) / Math.log(2); }
@@ -117,6 +127,10 @@ public class MaxPQC<T> implements MaxPQ<T> {
         }
         T fake = root.info;
         return fake;
+    }
+
+    private static boolean isGreater(Node key1, Node key2) {
+
     }
 
     public static void main(String[] args) {}
