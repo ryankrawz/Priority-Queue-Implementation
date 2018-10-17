@@ -69,7 +69,7 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
             return toString(root.left);
         }
         System.out.print(" " + root.info + " ");
-        
+        // TODO not complete
     }
 
     public void exchange(Node key1, Node key2) {
