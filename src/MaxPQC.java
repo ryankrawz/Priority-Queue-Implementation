@@ -6,7 +6,7 @@ Nick Hawk & Ryan Krawczyk
 import java.util.*;
 import java.lang.*;
 
-public class MaxPQC<T> implements MaxPQ<T> {
+public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
 
     private Node first, last;
     private int N;
@@ -66,7 +66,6 @@ public class MaxPQC<T> implements MaxPQ<T> {
       T temp = key1.info;
       key1.info = key2.info;
       key2.info = temp;
-
     }
 
     private void sink(Node key) {
