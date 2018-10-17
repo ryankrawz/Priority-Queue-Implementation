@@ -13,7 +13,6 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
 
     private class Node {
         T info;
-        int place;
         Node parent;
         Node left;
         Node right;
@@ -106,7 +105,7 @@ public class MaxPQC<T> implements MaxPQ<T extends Comparable<T>> {
 
     private T setLast(Node root, int N) {
         int nodeCount = 0;
-        for (int i = 0; i < level(N); i++) {
+        for (double i = 0; i < level(N); i++) {
             nodeCount += Math.pow(2, i);
         }
         int bottomLeaves = N - nodeCount;
